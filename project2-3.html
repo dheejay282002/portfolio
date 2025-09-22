@@ -10,16 +10,27 @@
     body {
       font-family: 'Poppins', sans-serif;
       color: #fff;
-      background: linear-gradient(135deg, #1a1a1d, #232a34, #1f1c2c);
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
+      overflow: hidden;
     }
 
+    /* Background canvas */
+    #bg-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #1a1a1d, #232a34, #1f1c2c);
+    }
+
+    /* Glass box */
     .glass-box {
+      position: relative;
+      z-index: 1;
       background: rgba(255,255,255,0.08);
       backdrop-filter: blur(15px);
       border-radius: 15px;
@@ -27,19 +38,11 @@
       max-width: 600px;
       width: 90%;
       box-shadow: 0 0 20px rgba(0,247,255,0.4);
-      animation: fadeInUp 0.8s ease;
+      animation: fadeInUp 1s ease;
     }
 
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      color: #00f7ff;
-    }
-
-    p {
-      font-size: 1.1rem;
-      color: rgba(255,255,255,0.85);
-    }
+    h1 { font-size: 2rem; margin-bottom: 20px; color: #00f7ff; }
+    p { font-size: 1.1rem; color: rgba(255,255,255,0.85); }
 
     a.back-btn {
       margin-top: 25px;
@@ -64,10 +67,62 @@
   </style>
 </head>
 <body>
+  <canvas id="bg-canvas"></canvas>
+
   <div class="glass-box">
     <h1>🚧 Project 2</h1>
     <p>This project is currently under development. Stay tuned for updates!</p>
     <a href="index.html" class="back-btn">⬅ Back to Portfolio</a>
   </div>
+
+  <script>
+    const canvas = document.getElementById("bg-canvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.r = Math.random() * 5 + 2;
+        this.sx = (Math.random() - 0.5) * 1.2;
+        this.sy = (Math.random() - 0.5) * 1.2;
+        this.c = `hsla(${Math.random() * 360},70%,60%,0.6)`;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+        ctx.fillStyle = this.c;
+        ctx.fill();
+      }
+      update() {
+        this.x += this.sx;
+        this.y += this.sy;
+        if(this.x < 0 || this.x > canvas.width) this.sx *= -1;
+        if(this.y < 0 || this.y > canvas.height) this.sy *= -1;
+        this.draw();
+      }
+    }
+
+    function initParticles(n) {
+      for(let i=0;i<n;i++) particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particles.forEach(p => p.update());
+      requestAnimationFrame(animate);
+    }
+
+    initParticles(60);
+    animate();
+  </script>
 </body>
 </html>

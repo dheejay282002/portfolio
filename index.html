@@ -6,54 +6,46 @@
   <title>Dee Jay Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    /* ===== Global ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      font-family: 'Poppins', sans-serif; 
-      line-height: 1.6; 
-      color: #fff; 
-      background: #111; 
-      overflow-x: hidden;
-    }
+    body { font-family: 'Poppins', sans-serif; color: #fff; overflow-x: hidden; }
 
     /* Background animation canvas */
     #bg-canvas {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      z-index: -1;
+      z-index: -2;
       background: linear-gradient(135deg, #1a1a1d, #232a34, #1f1c2c);
       animation: gradientShift 20s ease infinite;
     }
 
     /* Navbar */
-    .navbar { 
-      display: flex; justify-content: space-between; align-items: center; 
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center;
       padding: 20px; position: fixed; width: 100%; top: 0; z-index: 1000;
-      background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); 
+      background: rgba(0,0,0,0.4); backdrop-filter: blur(10px);
     }
     .nav-links { list-style: none; display: flex; gap: 20px; }
     .nav-links a { text-decoration: none; color: #fff; transition: 0.3s; }
     .nav-links a:hover { color: #00f7ff; }
 
     /* Hero */
-    .hero { display: flex; align-items: center; justify-content: center; height: 100vh; padding-top: 60px; }
-    .hero-text { flex: 1; animation: fadeInLeft 1.5s ease; text-align: center; }
+    .hero { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; padding-top: 60px; text-align: center; }
+    .hero-text { animation: fadeInUp 1.5s ease; }
     .hero-text h2 { font-size: 2.5rem; }
     .hero-text h3 { font-size: 1.5rem; color: #00f7ff; margin: 10px 0; }
-    .hero-img img { 
+    .hero-img img {
       width: 220px; height: 220px; object-fit: cover; border-radius: 50%;
-      border: 4px solid rgba(255,255,255,0.4); 
+      border: 4px solid rgba(255,255,255,0.4);
       animation: bounce 3s infinite, glow 2s ease-in-out infinite alternate;
     }
 
     /* Sections */
     section { padding: 80px 10%; text-align: center; position: relative; z-index: 1; }
     .section-title { font-size: 2rem; margin-bottom: 30px; animation: fadeIn 2s ease; }
-
-    .about p { 
+    .about p {
       max-width: 600px; margin: auto; animation: fadeInUp 1.5s ease;
-      padding: 20px; background: rgba(255,255,255,0.06); border-radius: 15px; 
+      padding: 20px; background: rgba(255,255,255,0.06); border-radius: 15px;
       backdrop-filter: blur(8px);
     }
 
@@ -64,13 +56,13 @@
     .progress span { display: block; height: 100%; animation: grow 2s forwards; }
     .html span { background: #f16529cc; width: 90%; }
     .css span { background: #2965f1cc; width: 85%; }
-    .js span { background: #f7df1ecc; width: 75%; color: #000; }
+    .js span { background: #f7df1ecc; width: 75%; }
     .py span { background: #3776abcc; width: 80%; }
 
     /* Projects */
     .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-    .card { 
-      padding: 40px; border-radius: 15px; 
+    .card {
+      padding: 40px; border-radius: 15px;
       background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
       transition: transform 0.3s, background 0.3s;
     }
@@ -79,14 +71,13 @@
     /* Footer */
     footer { text-align: center; padding: 20px; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
 
-    /* Floating Contact Button */
+    /* Contact Modal Button */
     #contact-toggle {
       position: fixed;
       bottom: 20px; right: 20px;
       width: 60px; height: 60px;
       border-radius: 50%;
-      background: #00f7ff;
-      color: #000; font-size: 1.5rem;
+      background: #00f7ff; color: #000; font-size: 1.5rem;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; z-index: 2000;
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
@@ -94,80 +85,63 @@
     }
     #contact-toggle:hover { transform: scale(1.1); }
 
-    /* Floating Contact Widget */
-    #contact-widget {
-      position: fixed;
-      bottom: 90px; right: 20px;
-      width: 320px;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 20px;
+    /* Modal Overlay */
+    #overlay {
       display: none;
-      flex-direction: column;
-      gap: 12px;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+      justify-content: center; align-items: center;
       z-index: 1999;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-      animation: slideUp 0.4s ease forwards;
     }
-    #contact-widget h3 { margin-bottom: 10px; text-align: center; }
-    #contact-widget input, 
-    #contact-widget textarea {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-    }
-    #contact-widget .btn {
-      width: 100%;
-      background: #00f7ff; color: #000; font-weight: bold;
-      border: none; padding: 10px; border-radius: 8px;
-      cursor: pointer; transition: 0.3s;
-    }
-    #contact-widget .btn:hover { background: #00c1cc; }
 
-    /* Thank You message */
+    /* Centered Contact Modal */
+    #contact-modal {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 30px;
+      width: 90%; max-width: 400px;
+      animation: fadeInUp 0.5s ease;
+    }
+    #contact-modal h3 { margin-bottom: 10px; text-align: center; }
+    #contact-modal input, 
+    #contact-modal textarea {
+      width: 100%; padding: 10px;
+      border-radius: 8px; border: none;
+      background: rgba(255,255,255,0.1);
+      color: #fff; margin: 5px 0;
+    }
+    #contact-modal .btn {
+      width: 100%; background: #00f7ff; color: #000; font-weight: bold;
+      border: none; padding: 10px; border-radius: 8px; cursor: pointer;
+      transition: 0.3s; margin-top: 5px;
+    }
+    #contact-modal .btn:hover { background: #00c1cc; }
     #thank-you {
-      display: none;
-      text-align: center;
-      padding: 10px;
+      display: none; text-align: center; padding: 10px;
       background: rgba(0,255,255,0.1);
-      border-radius: 10px;
-      font-size: 0.9rem;
-      margin-top: 10px;
+      border-radius: 10px; font-size: 0.9rem; margin-top: 10px;
     }
 
     /* Animations */
-    @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-    @keyframes grow { from { width: 0; } }
-    @keyframes glow {
-      from { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; }
-      to { box-shadow: 0 0 20px #00c1cc, 0 0 40px #00f7ff; }
-    }
+    @keyframes glow { from { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; } to { box-shadow: 0 0 20px #00c1cc, 0 0 40px #00f7ff; } }
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    @keyframes slideUp {
-      from { transform: translateY(50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
+    @keyframes grow { from { width: 0; } }
 
     @media (max-width: 768px) {
-      .hero { flex-direction: column; text-align: center; }
-      .hero-img { margin-top: 20px; }
+      .hero { padding-top: 80px; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Animated Background -->
+  <!-- Background -->
   <canvas id="bg-canvas"></canvas>
 
   <!-- Navbar -->
@@ -226,94 +200,82 @@
   <!-- Floating Contact Button -->
   <div id="contact-toggle">✉️</div>
 
-  <!-- Floating Contact Form -->
-  <div id="contact-widget">
-    <form id="contact-form" action="https://formsubmit.co/deejay.cristobal@protonmail.com" method="POST">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="">
-
-      <h3>Contact Me</h3>
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="Your Message" required></textarea>
-      <button type="submit" class="btn">Send</button>
-    </form>
-    <div id="thank-you">✅ Thank you for your message! I’ll reply as soon as I can.</div>
+  <!-- Contact Modal -->
+  <div id="overlay">
+    <div id="contact-modal">
+      <form id="contact-form" action="https://formsubmit.co/deejay.cristobal@protonmail.com" method="POST">
+        <input type="hidden" name="_captcha" value="false">
+        <h3>Contact Me</h3>
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Your Message" required></textarea>
+        <button type="submit" class="btn">Send</button>
+      </form>
+      <div id="thank-you">✅ Thank you for your message! I’ll reply as soon as I can.</div>
+    </div>
   </div>
 
   <!-- JS -->
   <script>
-    // Toggle Contact Widget
     const toggle = document.getElementById("contact-toggle");
-    const widget = document.getElementById("contact-widget");
+    const overlay = document.getElementById("overlay");
+    const thankYou = document.getElementById("thank-you");
+
+    // Toggle Modal
     toggle.addEventListener("click", () => {
-      widget.style.display = (widget.style.display === "flex") ? "none" : "flex";
+      overlay.style.display = "flex";
+    });
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) overlay.style.display = "none";
     });
 
-    // Handle Form Submission
+    // Handle Form
     document.getElementById("contact-form").addEventListener("submit", function(e) {
       e.preventDefault();
       const form = e.target;
-      fetch(form.action, {
-        method: "POST",
-        body: new FormData(form),
-      }).then(() => {
-        form.reset();
-        document.getElementById("thank-you").style.display = "block";
-      });
+      fetch(form.action, { method: "POST", body: new FormData(form) })
+        .then(() => {
+          form.reset();
+          thankYou.style.display = "block";
+        });
     });
 
-    // ===== Background Animated Particles =====
+    // Background Particles
     const canvas = document.getElementById("bg-canvas");
     const ctx = canvas.getContext("2d");
     let particles = [];
-
     function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
+    window.addEventListener("resize", resizeCanvas); resizeCanvas();
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.radius = Math.random() * 6 + 2;
-        this.color = `hsla(${Math.random() * 360}, 70%, 60%, 0.6)`;
-        this.speedX = (Math.random() - 0.5) * 1.5;
-        this.speedY = (Math.random() - 0.5) * 1.5;
+        this.r = Math.random() * 5 + 2;
+        this.sx = (Math.random() - 0.5) * 1.2;
+        this.sy = (Math.random() - 0.5) * 1.2;
+        this.c = `hsla(${Math.random() * 360},70%,60%,0.6)`;
       }
       draw() {
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = this.c; ctx.fill();
       }
       update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        this.x += this.sx; this.y += this.sy;
+        if (this.x < 0 || this.x > canvas.width) this.sx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.sy *= -1;
         this.draw();
       }
     }
-
-    function initParticles(num) {
-      particles = [];
-      for (let i = 0; i < num; i++) {
-        particles.push(new Particle());
-      }
-    }
-
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    function initParticles(n) { for (let i=0;i<n;i++) particles.push(new Particle()); }
+    function animate() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
       particles.forEach(p => p.update());
-      requestAnimationFrame(animateParticles);
+      requestAnimationFrame(animate);
     }
-
-    initParticles(60);
-    animateParticles();
+    initParticles(60); animate();
   </script>
 </body>
 </html>

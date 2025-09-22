@@ -12,9 +12,18 @@
       font-family: 'Poppins', sans-serif; 
       line-height: 1.6; 
       color: #fff; 
-      background: linear-gradient(135deg, #1a1a1d, #232a34, #1f1c2c); 
-      background-size: 400% 400%; 
-      animation: gradientShift 12s ease infinite; 
+      background: #111; 
+      overflow-x: hidden;
+    }
+
+    /* Background animation canvas */
+    #bg-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #1a1a1d, #232a34, #1f1c2c);
+      animation: gradientShift 20s ease infinite;
     }
 
     /* Navbar */
@@ -39,7 +48,7 @@
     }
 
     /* Sections */
-    section { padding: 80px 10%; text-align: center; }
+    section { padding: 80px 10%; text-align: center; position: relative; z-index: 1; }
     .section-title { font-size: 2rem; margin-bottom: 30px; animation: fadeIn 2s ease; }
 
     .about p { 
@@ -158,6 +167,9 @@
 </head>
 <body>
 
+  <!-- Animated Background -->
+  <canvas id="bg-canvas"></canvas>
+
   <!-- Navbar -->
   <nav class="navbar">
     <h1>Dee Jay</h1>
@@ -250,6 +262,58 @@
         document.getElementById("thank-you").style.display = "block";
       });
     });
+
+    // ===== Background Animated Particles =====
+    const canvas = document.getElementById("bg-canvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.radius = Math.random() * 6 + 2;
+        this.color = `hsla(${Math.random() * 360}, 70%, 60%, 0.6)`;
+        this.speedX = (Math.random() - 0.5) * 1.5;
+        this.speedY = (Math.random() - 0.5) * 1.5;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        this.draw();
+      }
+    }
+
+    function initParticles(num) {
+      particles = [];
+      for (let i = 0; i < num; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => p.update());
+      requestAnimationFrame(animateParticles);
+    }
+
+    initParticles(60);
+    animateParticles();
   </script>
 </body>
 </html>

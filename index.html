@@ -3,292 +3,295 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dee Jay Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <title>Dee Jay | Portfolio</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Poppins', sans-serif; color: #fff; overflow-x: hidden; }
+    * {margin:0; padding:0; box-sizing:border-box;}
 
-    /* Background animation canvas */
-    #bg-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -2;
-      background: linear-gradient(135deg, #1a1a1d, #232a34, #1f1c2c);
-      animation: gradientShift 20s ease infinite;
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #cfd9df, #e2ebf0);
+      color:#333;
+      min-height:100vh;
+      overflow-x:hidden;
     }
 
     /* Navbar */
-    .navbar {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 20px; position: fixed; width: 100%; top: 0; z-index: 1000;
-      background: rgba(0,0,0,0.4); backdrop-filter: blur(10px);
+    nav {
+      position:fixed;
+      top:0; left:0;
+      width:100%;
+      backdrop-filter:blur(12px);
+      background:rgba(255,255,255,0.3);
+      display:flex; justify-content:center; gap:30px;
+      padding:15px;
+      z-index:1000;
     }
-    .nav-links { list-style: none; display: flex; gap: 20px; }
-    .nav-links a { text-decoration: none; color: #fff; transition: 0.3s; }
-    .nav-links a:hover { color: #00f7ff; }
+    nav a {
+      text-decoration:none;
+      color:#333;
+      font-weight:bold;
+      position:relative;
+      transition:color 0.3s;
+    }
+    nav a::after {
+      content:"";
+      position:absolute;
+      left:0; bottom:-5px;
+      width:0%; height:2px;
+      background:#333;
+      transition:width 0.3s;
+    }
+    nav a:hover {color:#000;}
+    nav a:hover::after {width:100%;}
 
     /* Hero */
-    .hero { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; padding-top: 60px; text-align: center; }
-    .hero-text { animation: fadeInUp 1.5s ease; }
-    .hero-text h2 { font-size: 2.5rem; }
-    .hero-text h3 { font-size: 1.5rem; color: #00f7ff; margin: 10px 0; }
-    .hero-img img {
-      width: 220px; height: 220px; object-fit: cover; border-radius: 50%;
-      border: 4px solid rgba(255,255,255,0.4);
-      animation: bounce 3s infinite, glow 2s ease-in-out infinite alternate;
+    header {
+      padding-top:120px;
+      text-align:center;
+    }
+    header img {
+      width:150px; height:150px;
+      border-radius:50%;
+      border:5px solid rgba(255,255,255,0.6);
+      animation:bounce 2s infinite;
+    }
+    header h1 { font-size:2rem; margin-top:15px; }
+    header p { font-size:1.1rem; color:#555; }
+
+    @keyframes bounce {
+      0%,20%,50%,80%,100% {transform:translateY(0);}
+      40% {transform:translateY(-20px);}
+      60% {transform:translateY(-10px);}
     }
 
-    /* General Modal */
+    /* Modals */
     .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      justify-content: center; align-items: center;
-      z-index: 1500;
+      display:none;
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background:rgba(0,0,0,0.5);
+      backdrop-filter:blur(6px);
+      justify-content:center;
+      align-items:center;
+      z-index:2000;
     }
-
     .modal-content {
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(15px);
-      border-radius: 15px;
-      padding: 40px;
-      width: 90%; max-width: 600px;
-      text-align: center;
-      animation: fadeInUp 0.5s ease;
+      background:rgba(255,255,255,0.7);
+      backdrop-filter:blur(20px);
+      padding:25px;
+      border-radius:15px;
+      width:90%; max-width:500px;
+      animation:fadeIn 0.3s ease;
+      position:relative;
+    }
+    .modal-content h2 { margin-bottom:15px; text-align:center; }
+    .close {
+      position:absolute;
+      top:10px; right:15px;
+      font-size:22px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+    @keyframes fadeIn {
+      from {opacity:0; transform:scale(0.9);}
+      to {opacity:1; transform:scale(1);}
     }
 
-    /* Overlay */
-    #overlay {
-      display: none;
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
-      z-index: 1400;
+    /* Skills bars */
+    .skill { margin:10px 0; }
+    .bar {
+      height:10px;
+      background:#ddd;
+      border-radius:5px;
+      overflow:hidden;
     }
-
-    /* Skills */
-    .skill-bars { max-width: 500px; margin: auto; }
-    .bar { margin: 15px 0; text-align: left; }
-    .progress { background: rgba(255,255,255,0.15); border-radius: 20px; overflow: hidden; height: 20px; }
-    .progress span { display: block; height: 100%; animation: grow 2s forwards; }
-    .html span { background: #f16529cc; width: 90%; }
-    .css span { background: #2965f1cc; width: 85%; }
-    .js span { background: #f7df1ecc; width: 75%; }
-    .py span { background: #3776abcc; width: 80%; }
+    .bar-fill {
+      height:100%;
+      background:linear-gradient(90deg,#74ebd5,#9face6);
+      width:0%;
+      transition:width 1s ease-in-out;
+    }
 
     /* Projects */
-    .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-    .card {
-      padding: 30px; border-radius: 15px;
-      background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
-      transition: transform 0.3s, background 0.3s;
-    }
-    .card:hover { transform: translateY(-10px) scale(1.05); background: rgba(255,255,255,0.15); }
-
-    /* Footer */
-    footer { text-align: center; padding: 20px; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
-
-    /* Contact Button */
-    #contact-toggle {
-      position: fixed;
-      bottom: 20px; right: 20px;
-      width: 60px; height: 60px;
-      border-radius: 50%;
-      background: #00f7ff; color: #000; font-size: 1.5rem;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 2000;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-      transition: transform 0.3s;
-    }
-    #contact-toggle:hover { transform: scale(1.1); }
-
-    /* Contact Modal */
-    #thank-you {
-      display: none; text-align: center; padding: 10px;
-      background: rgba(0,255,255,0.1);
-      border-radius: 10px; font-size: 0.9rem; margin-top: 10px;
+    .project {
+      background:rgba(255,255,255,0.6);
+      padding:10px;
+      border-radius:10px;
+      margin:10px 0;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
     }
 
-    /* Animations */
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-    @keyframes glow { from { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; } to { box-shadow: 0 0 20px #00c1cc, 0 0 40px #00f7ff; } }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    /* Contact form */
+    form {
+      display:flex;
+      flex-direction:column;
+      gap:10px;
     }
-    @keyframes grow { from { width: 0; } }
-
-    @media (max-width: 768px) {
-      .hero { padding-top: 80px; }
+    input, textarea, button {
+      padding:10px;
+      border:none;
+      border-radius:8px;
+      font-size:1rem;
     }
+    button {
+      background:linear-gradient(90deg,#74ebd5,#9face6);
+      cursor:pointer;
+      color:#fff;
+      font-weight:bold;
+      transition:opacity 0.3s;
+    }
+    button:hover {opacity:0.8;}
   </style>
 </head>
 <body>
-  <!-- Background -->
-  <canvas id="bg-canvas"></canvas>
 
   <!-- Navbar -->
-  <nav class="navbar">
-    <h1>Dee Jay</h1>
-    <ul class="nav-links">
-      <li><a href="#" data-modal="about-modal">About</a></li>
-      <li><a href="#" data-modal="skills-modal">Skills</a></li>
-      <li><a href="#" data-modal="projects-modal">Projects</a></li>
-    </ul>
+  <nav>
+    <a href="#" data-modal="aboutModal">About</a>
+    <a href="#" data-modal="skillsModal">Skills</a>
+    <a href="#" data-modal="projectsModal">Projects</a>
+    <a href="#" data-modal="contactModal">Contact</a>
   </nav>
 
   <!-- Hero -->
-  <section class="hero">
-    <div class="hero-img">
-      <img src="profile.jpg" alt="Profile Picture">
-    </div>
-    <div class="hero-text">
-      <h2>Hello, I'm Dee Jay 👋</h2>
-      <h3>IT Student | Web Developer | Tech Enthusiast</h3>
-    </div>
-  </section>
-
-  <!-- Overlay -->
-  <div id="overlay"></div>
+  <header>
+    <img src="https://via.placeholder.com/150" alt="Profile">
+    <h1>Dee Jay</h1>
+    <p>IT Student | Aspiring Developer</p>
+  </header>
 
   <!-- About Modal -->
-  <div id="about-modal" class="modal">
+  <div class="modal" id="aboutModal">
     <div class="modal-content">
-      <h2 class="section-title">About Me</h2>
-      <p>I am passionate about technology, coding, and creating clean, responsive websites. Always curious and constantly learning, I aim to build projects that are both functional and beautiful.</p>
+      <span class="close">&times;</span>
+      <h2>About Me</h2>
+      <p>Hello! I’m Dee Jay, an IT student passionate about web development and tech innovation. This is my professional portfolio.</p>
     </div>
   </div>
 
   <!-- Skills Modal -->
-  <div id="skills-modal" class="modal">
+  <div class="modal" id="skillsModal">
     <div class="modal-content">
-      <h2 class="section-title">Skills</h2>
-      <div class="skill-bars">
-        <div class="bar html"><p>HTML</p><div class="progress"><span></span></div></div>
-        <div class="bar css"><p>CSS</p><div class="progress"><span></span></div></div>
-        <div class="bar js"><p>JavaScript</p><div class="progress"><span></span></div></div>
-        <div class="bar py"><p>Python</p><div class="progress"><span></span></div></div>
+      <span class="close">&times;</span>
+      <h2>Skills</h2>
+      <div class="skill">
+        <p>HTML</p>
+        <div class="bar"><div class="bar-fill" data-width="90%"></div></div>
+      </div>
+      <div class="skill">
+        <p>CSS</p>
+        <div class="bar"><div class="bar-fill" data-width="80%"></div></div>
+      </div>
+      <div class="skill">
+        <p>JavaScript</p>
+        <div class="bar"><div class="bar-fill" data-width="70%"></div></div>
       </div>
     </div>
   </div>
 
   <!-- Projects Modal -->
-  <div id="projects-modal" class="modal">
+  <div class="modal" id="projectsModal">
     <div class="modal-content">
-      <h2 class="section-title">Projects</h2>
-      <div class="project-grid">
-        <div class="card">Project 1</div>
-        <div class="card">Project 2</div>
-        <div class="card">Project 3</div>
+      <span class="close">&times;</span>
+      <h2>Projects</h2>
+      <div class="project">
+        <h3>Portfolio Website</h3>
+        <p>A responsive portfolio with modals, frosted effects, and animations.</p>
+      </div>
+      <div class="project">
+        <h3>Data App</h3>
+        <p>An experimental web app for handling student data efficiently.</p>
       </div>
     </div>
   </div>
 
   <!-- Contact Modal -->
-  <div id="contact-modal" class="modal">
+  <div class="modal" id="contactModal">
     <div class="modal-content">
-      <form id="contact-form" action="https://formsubmit.co/deejay.cristobal@protonmail.com" method="POST">
+      <span class="close">&times;</span>
+      <h2>Contact Me</h2>
+      <form id="contactForm" action="https://formsubmit.co/deejay.cristobal@protonmail.com" method="POST">
         <input type="hidden" name="_captcha" value="false">
-        <h3>Contact Me</h3>
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="javascript:void(0);">
         <input type="text" name="name" placeholder="Your Name" required>
         <input type="email" name="email" placeholder="Your Email" required>
-        <textarea name="message" placeholder="Your Message" required></textarea>
-        <button type="submit" class="btn">Send</button>
+        <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
       </form>
-      <div id="thank-you">✅ Thank you for your message! I’ll reply as soon as I can.</div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Dee Jay | All Rights Reserved</p>
-  </footer>
+  <!-- Thank You Modal -->
+  <div class="modal" id="thankYouModal">
+    <div class="modal-content">
+      <h2>Thank You!</h2>
+      <p>Your message has been sent successfully.</p>
+    </div>
+  </div>
 
-  <!-- Floating Contact Button -->
-  <div id="contact-toggle">✉️</div>
-
-  <!-- JS -->
   <script>
-    const overlay = document.getElementById("overlay");
+    // Modal logic
+    const links = document.querySelectorAll("nav a");
     const modals = document.querySelectorAll(".modal");
-    const links = document.querySelectorAll(".nav-links a");
-    const contactBtn = document.getElementById("contact-toggle");
-    const thankYou = document.getElementById("thank-you");
+    const closes = document.querySelectorAll(".close");
 
-    // Open modals from nav
     links.forEach(link => {
       link.addEventListener("click", e => {
         e.preventDefault();
-        const target = document.getElementById(link.dataset.modal);
-        modals.forEach(m => m.style.display = "none");
-        overlay.style.display = "block";
-        target.style.display = "flex";
+        const modal = document.getElementById(link.dataset.modal);
+        if(modal) {
+          modal.style.display="flex";
+          if(link.dataset.modal === "skillsModal") {
+            animateSkills();
+          }
+        }
       });
     });
 
-    // Contact button
-    contactBtn.addEventListener("click", () => {
-      modals.forEach(m => m.style.display = "none");
-      overlay.style.display = "block";
-      document.getElementById("contact-modal").style.display = "flex";
+    closes.forEach(c => {
+      c.addEventListener("click", () => {
+        c.parentElement.parentElement.style.display="none";
+        resetSkills();
+      });
     });
 
-    // ✅ Close modal when clicking overlay
-    overlay.addEventListener("click", () => {
-      overlay.style.display = "none";
-      modals.forEach(m => m.style.display = "none");
+    window.addEventListener("click", e => {
+      modals.forEach(m => {
+        if(e.target === m) {
+          m.style.display="none";
+          resetSkills();
+        }
+      });
     });
 
-    // Contact form submit
-    document.getElementById("contact-form").addEventListener("submit", function(e) {
+    // Skills animation
+    function animateSkills() {
+      document.querySelectorAll("#skillsModal .bar-fill").forEach(bar => {
+        bar.style.width = bar.dataset.width;
+      });
+    }
+    function resetSkills() {
+      document.querySelectorAll("#skillsModal .bar-fill").forEach(bar => {
+        bar.style.width = "0%";
+      });
+    }
+
+    // Contact form thank you handling
+    const form = document.getElementById("contactForm");
+    form.addEventListener("submit", function(e){
       e.preventDefault();
-      const form = e.target;
-      fetch(form.action, { method: "POST", body: new FormData(form) })
+      const data = new FormData(form);
+      fetch(form.action, {method:"POST", body:data})
         .then(() => {
+          document.getElementById("contactModal").style.display="none";
+          const thankYou = document.getElementById("thankYouModal");
+          thankYou.style.display="flex";
+          setTimeout(()=>{ thankYou.style.display="none"; },2000);
           form.reset();
-          thankYou.style.display = "block";
         });
     });
-
-    // Background Particles
-    const canvas = document.getElementById("bg-canvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [];
-    function resizeCanvas() {
-      canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resizeCanvas); resizeCanvas();
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.r = Math.random() * 5 + 2;
-        this.sx = (Math.random() - 0.5) * 1.2;
-        this.sy = (Math.random() - 0.5) * 1.2;
-        this.c = `hsla(${Math.random() * 360},70%,60%,0.6)`;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fillStyle = this.c; ctx.fill();
-      }
-      update() {
-        this.x += this.sx; this.y += this.sy;
-        if (this.x < 0 || this.x > canvas.width) this.sx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.sy *= -1;
-        this.draw();
-      }
-    }
-    function initParticles(n) { for (let i=0;i<n;i++) particles.push(new Particle()); }
-    function animate() {
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      particles.forEach(p => p.update());
-      requestAnimationFrame(animate);
-    }
-    initParticles(60); animate();
   </script>
 </body>
 </html>

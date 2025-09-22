@@ -78,10 +78,14 @@
   <!-- Contact -->
   <section id="contact" class="contact">
     <h2 class="section-title">Contact Me</h2>
-    <form>
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <textarea placeholder="Your Message" required></textarea>
+    <form action="https://formsubmit.co/deejay.cristobal@protonmail.com" method="POST">
+      <!-- Hidden fields -->
+      <input type="hidden" name="_captcha" value="false"> 
+      <input type="hidden" name="_next" value="https://yourusername.github.io/portfolio/thanks.html"> 
+
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" placeholder="Your Message" required></textarea>
       <button type="submit" class="btn">Send</button>
     </form>
   </section>

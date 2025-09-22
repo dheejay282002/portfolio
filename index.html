@@ -1,297 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dee Jay | Portfolio</title>
-  <style>
-    * {margin:0; padding:0; box-sizing:border-box;}
+/* Contact Form Glass Style */
+#contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #cfd9df, #e2ebf0);
-      color:#333;
-      min-height:100vh;
-      overflow-x:hidden;
-    }
+#contact-form h3 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  color: #00f7ff;
+}
 
-    /* Navbar */
-    nav {
-      position:fixed;
-      top:0; left:0;
-      width:100%;
-      backdrop-filter:blur(12px);
-      background:rgba(255,255,255,0.3);
-      display:flex; justify-content:center; gap:30px;
-      padding:15px;
-      z-index:1000;
-    }
-    nav a {
-      text-decoration:none;
-      color:#333;
-      font-weight:bold;
-      position:relative;
-      transition:color 0.3s;
-    }
-    nav a::after {
-      content:"";
-      position:absolute;
-      left:0; bottom:-5px;
-      width:0%; height:2px;
-      background:#333;
-      transition:width 0.3s;
-    }
-    nav a:hover {color:#000;}
-    nav a:hover::after {width:100%;}
+#contact-form input,
+#contact-form textarea {
+  padding: 12px 15px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
 
-    /* Hero */
-    header {
-      padding-top:120px;
-      text-align:center;
-    }
-    header img {
-      width:150px; height:150px;
-      border-radius:50%;
-      border:5px solid rgba(255,255,255,0.6);
-      animation:bounce 2s infinite;
-    }
-    header h1 { font-size:2rem; margin-top:15px; }
-    header p { font-size:1.1rem; color:#555; }
+#contact-form input::placeholder,
+#contact-form textarea::placeholder {
+  color: rgba(255,255,255,0.6);
+}
 
-    @keyframes bounce {
-      0%,20%,50%,80%,100% {transform:translateY(0);}
-      40% {transform:translateY(-20px);}
-      60% {transform:translateY(-10px);}
-    }
+#contact-form input:focus,
+#contact-form textarea:focus {
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 0 8px #00f7ff;
+}
 
-    /* Modals */
-    .modal {
-      display:none;
-      position:fixed;
-      top:0; left:0;
-      width:100%; height:100%;
-      background:rgba(0,0,0,0.5);
-      backdrop-filter:blur(6px);
-      justify-content:center;
-      align-items:center;
-      z-index:2000;
-    }
-    .modal-content {
-      background:rgba(255,255,255,0.7);
-      backdrop-filter:blur(20px);
-      padding:25px;
-      border-radius:15px;
-      width:90%; max-width:500px;
-      animation:fadeIn 0.3s ease;
-      position:relative;
-    }
-    .modal-content h2 { margin-bottom:15px; text-align:center; }
-    .close {
-      position:absolute;
-      top:10px; right:15px;
-      font-size:22px;
-      cursor:pointer;
-      font-weight:bold;
-    }
-    @keyframes fadeIn {
-      from {opacity:0; transform:scale(0.9);}
-      to {opacity:1; transform:scale(1);}
-    }
+#contact-form textarea {
+  min-height: 120px;
+  resize: none;
+}
 
-    /* Skills bars */
-    .skill { margin:10px 0; }
-    .bar {
-      height:10px;
-      background:#ddd;
-      border-radius:5px;
-      overflow:hidden;
-    }
-    .bar-fill {
-      height:100%;
-      background:linear-gradient(90deg,#74ebd5,#9face6);
-      width:0%;
-      transition:width 1s ease-in-out;
-    }
+#contact-form .btn {
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(0,247,255,0.8);
+  color: #000;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
-    /* Projects */
-    .project {
-      background:rgba(255,255,255,0.6);
-      padding:10px;
-      border-radius:10px;
-      margin:10px 0;
-      box-shadow:0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    /* Contact form */
-    form {
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    input, textarea, button {
-      padding:10px;
-      border:none;
-      border-radius:8px;
-      font-size:1rem;
-    }
-    button {
-      background:linear-gradient(90deg,#74ebd5,#9face6);
-      cursor:pointer;
-      color:#fff;
-      font-weight:bold;
-      transition:opacity 0.3s;
-    }
-    button:hover {opacity:0.8;}
-  </style>
-</head>
-<body>
-
-  <!-- Navbar -->
-  <nav>
-    <a href="#" data-modal="aboutModal">About</a>
-    <a href="#" data-modal="skillsModal">Skills</a>
-    <a href="#" data-modal="projectsModal">Projects</a>
-    <a href="#" data-modal="contactModal">Contact</a>
-  </nav>
-
-  <!-- Hero -->
-  <header>
-    <img src="https://via.placeholder.com/150" alt="Profile">
-    <h1>Dee Jay</h1>
-    <p>IT Student | Aspiring Developer</p>
-  </header>
-
-  <!-- About Modal -->
-  <div class="modal" id="aboutModal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>About Me</h2>
-      <p>Hello! I’m Dee Jay, an IT student passionate about web development and tech innovation. This is my professional portfolio.</p>
-    </div>
-  </div>
-
-  <!-- Skills Modal -->
-  <div class="modal" id="skillsModal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Skills</h2>
-      <div class="skill">
-        <p>HTML</p>
-        <div class="bar"><div class="bar-fill" data-width="90%"></div></div>
-      </div>
-      <div class="skill">
-        <p>CSS</p>
-        <div class="bar"><div class="bar-fill" data-width="80%"></div></div>
-      </div>
-      <div class="skill">
-        <p>JavaScript</p>
-        <div class="bar"><div class="bar-fill" data-width="70%"></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Projects Modal -->
-  <div class="modal" id="projectsModal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Projects</h2>
-      <div class="project">
-        <h3>Portfolio Website</h3>
-        <p>A responsive portfolio with modals, frosted effects, and animations.</p>
-      </div>
-      <div class="project">
-        <h3>Data App</h3>
-        <p>An experimental web app for handling student data efficiently.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Contact Modal -->
-  <div class="modal" id="contactModal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Contact Me</h2>
-      <form id="contactForm" action="https://formsubmit.co/deejay.cristobal@protonmail.com" method="POST">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_next" value="javascript:void(0);">
-        <input type="text" name="name" placeholder="Your Name" required>
-        <input type="email" name="email" placeholder="Your Email" required>
-        <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
-        <button type="submit">Send Message</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Thank You Modal -->
-  <div class="modal" id="thankYouModal">
-    <div class="modal-content">
-      <h2>Thank You!</h2>
-      <p>Your message has been sent successfully.</p>
-    </div>
-  </div>
-
-  <script>
-    // Modal logic
-    const links = document.querySelectorAll("nav a");
-    const modals = document.querySelectorAll(".modal");
-    const closes = document.querySelectorAll(".close");
-
-    links.forEach(link => {
-      link.addEventListener("click", e => {
-        e.preventDefault();
-        const modal = document.getElementById(link.dataset.modal);
-        if(modal) {
-          modal.style.display="flex";
-          if(link.dataset.modal === "skillsModal") {
-            animateSkills();
-          }
-        }
-      });
-    });
-
-    closes.forEach(c => {
-      c.addEventListener("click", () => {
-        c.parentElement.parentElement.style.display="none";
-        resetSkills();
-      });
-    });
-
-    window.addEventListener("click", e => {
-      modals.forEach(m => {
-        if(e.target === m) {
-          m.style.display="none";
-          resetSkills();
-        }
-      });
-    });
-
-    // Skills animation
-    function animateSkills() {
-      document.querySelectorAll("#skillsModal .bar-fill").forEach(bar => {
-        bar.style.width = bar.dataset.width;
-      });
-    }
-    function resetSkills() {
-      document.querySelectorAll("#skillsModal .bar-fill").forEach(bar => {
-        bar.style.width = "0%";
-      });
-    }
-
-    // Contact form thank you handling
-    const form = document.getElementById("contactForm");
-    form.addEventListener("submit", function(e){
-      e.preventDefault();
-      const data = new FormData(form);
-      fetch(form.action, {method:"POST", body:data})
-        .then(() => {
-          document.getElementById("contactModal").style.display="none";
-          const thankYou = document.getElementById("thankYouModal");
-          thankYou.style.display="flex";
-          setTimeout(()=>{ thankYou.style.display="none"; },2000);
-          form.reset();
-        });
-    });
-  </script>
-</body>
-</html>
+#contact-form .btn:hover {
+  background: rgba(0,247,255,1);
+  box-shadow: 0 0 12px #00f7ff, 0 0 24px #00f7ff;
+}

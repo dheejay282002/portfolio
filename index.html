@@ -89,15 +89,79 @@
     .js span { background: #f7df1ecc; width: 75%; }
     .py span { background: #3776abcc; width: 80%; }
 
-    /* Projects */
-    .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-    .card {
-      padding: 30px; border-radius: 15px;
-      background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
-      transition: transform 0.3s, background 0.3s;
-    }
-    .card:hover { transform: translateY(-10px) scale(1.05); background: rgba(255,255,255,0.15); }
+  /* Project Grid Layout */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+  width: 100%;
+}
 
+/* Project Card */
+.card {
+  padding: 30px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px; /* ensures consistent base height */
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+  color: #00f7ff;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.85);
+  flex-grow: 1; /* let description expand naturally */
+}
+
+/* Hover effect */
+.card:hover {
+  transform: translateY(-10px) scale(1.05);
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 0 15px rgba(0,247,255,0.5);
+}
+  
+/* Project Cards */
+.project-grid a {
+  text-decoration: none;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+.card {
+  padding: 30px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+  display: block;
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+  color: #00f7ff;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.85);
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.05);
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 0 15px rgba(0,247,255,0.5);
+}
     /* Footer */
     footer { text-align: center; padding: 20px; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
 
@@ -246,19 +310,32 @@
       </div>
     </div>
   </div>
-
-  <!-- Projects Modal -->
-  <div id="projects-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn">&times;</span>
-      <h2 class="section-title">Projects</h2>
-<div class="project-grid">  
-  <a href="project1.html" class="card">Project 1</a>  
-  <a href="project2.html" class="card">Project 2</a>  
-  <a href="project3.html" class="card">Project 3</a>  
-</div>
+<!-- Projects Modal -->
+<div id="projects-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2 class="section-title">Projects</h2>
+    <div class="project-grid">
+      <a href="project1.html" class="card">  
+        <h3>Project 1</h3>  
+        <p>Modern portfolio with glassmorphism design and animations.</p>  
+      </a>  
+      <a href="project2.html" class="card">  
+        <h3>Project 2</h3>  
+        <p>Responsive web app with dynamic content and smooth UI.</p>  
+      </a>  
+      <a href="project3.html" class="card">  
+        <h3>Project 3</h3>  
+        <p>Creative experiment with JavaScript interactivity.</p>  
+      </a>  
     </div>
   </div>
+</div> <!-- ✅ properly closed Projects Modal -->
+
+<!-- Contact Modal -->
+<div id="contact-modal" class="modal">
+  ...
+</div>
 
 <!-- Contact Modal -->
 <div id="contact-modal" class="modal">

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project 2 - Dee Jay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      background: linear-gradient(135deg, #1a1a1d, #232a34, #1f1c2c);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .glass-box {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 40px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 0 20px rgba(0,247,255,0.4);
+      animation: fadeInUp 0.8s ease;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #00f7ff;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.85);
+    }
+
+    a.back-btn {
+      margin-top: 25px;
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 10px;
+      background: rgba(0,247,255,0.8);
+      color: #000;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    a.back-btn:hover {
+      background: rgba(0,247,255,1);
+      box-shadow: 0 0 12px #00f7ff, 0 0 24px #00f7ff;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-box">
+    <h1>🚧 Project 2</h1>
+    <p>This project is currently under development. Stay tuned for updates!</p>
+    <a href="index.html" class="back-btn">⬅ Back to Portfolio</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project 1 - Dee Jay Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; color: #fff; overflow-x: hidden; }
+
+    /* Background animation canvas */
+    #bg-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -2;
+      background: linear-gradient(135deg, #1a1a1d, #232a34, #1f1c2c);
+      animation: gradientShift 20s ease infinite;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px; position: fixed; width: 100%; top: 0; z-index: 1000;
+      background: rgba(0,0,0,0.4); backdrop-filter: blur(10px);
+    }
+    .nav-links { list-style: none; display: flex; gap: 20px; }
+    .nav-links a {
+      text-decoration: none; color: #fff; transition: 0.3s;
+    }
+    .nav-links a:hover { color: #00f7ff; }
+
+    /* Project Details Section */
+    .project-details {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; padding: 100px 20px 40px;
+    }
+    .glass-box {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 800px; width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      animation: fadeInUp 1s ease;
+    }
+    .glass-box h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #00f7ff;
+    }
+    .glass-box img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    }
+    .glass-box p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+    .btn-back {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #00f7ff;
+      color: #000;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .btn-back:hover { background: #00c1cc; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(8px);
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h1>Dee Jay</h1>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="projects.html">Projects</a></li>
+    </ul>
+  </nav>
+
+  <!-- Project Details -->
+  <section class="project-details">
+    <div class="glass-box">
+      <h2>Project 1 - Portfolio Website</h2>
+      <img src="project1.jpg" alt="Project 1 Screenshot">
+      <p>
+        This project is my **personal portfolio website**, built with a
+        modern glassmorphism design and a dynamic animated background.
+        It includes navigation, modals for About & Skills, and floating
+        contact functionality.
+        <br><br>
+        <strong>Technologies Used:</strong> HTML, CSS, JavaScript
+        <br>
+        <strong>Features:</strong> Animated particles background, glass design,
+        modal overlays, responsive layout.
+      </p>
+      <a href="projects.html" class="btn-back">← Back to Projects</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Dee Jay | All Rights Reserved</p>
+  </footer>
+
+  <!-- Background Particles -->
+  <script>
+    const canvas = document.getElementById("bg-canvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.r = Math.random() * 5 + 2;
+        this.sx = (Math.random() - 0.5) * 1.2;
+        this.sy = (Math.random() - 0.5) * 1.2;
+        this.c = `hsla(${Math.random() * 360},70%,60%,0.6)`;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = this.c;
+        ctx.fill();
+      }
+      update() {
+        this.x += this.sx;
+        this.y += this.sy;
+        if (this.x < 0 || this.x > canvas.width) this.sx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.sy *= -1;
+        this.draw();
+      }
+    }
+
+    function initParticles(n) {
+      for (let i = 0; i < n; i++) particles.push(new Particle());
+    }
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => p.update());
+      requestAnimationFrame(animate);
+    }
+    initParticles(60);
+    animate();
+  </script>
+</body>
+</html>

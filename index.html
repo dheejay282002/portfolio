@@ -236,10 +236,10 @@
       document.getElementById("contact-modal").style.display = "flex";
     });
 
-    // Close on overlay click
+    // ✅ Close modal when clicking overlay
     overlay.addEventListener("click", () => {
-      modals.forEach(m => m.style.display = "none");
       overlay.style.display = "none";
+      modals.forEach(m => m.style.display = "none");
     });
 
     // Contact form submit

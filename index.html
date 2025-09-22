@@ -6,7 +6,7 @@
   <title>Dee Jay Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    /* ===== CSS (Frosted + Animations) ===== */
+    /* ===== Global ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { 
       font-family: 'Poppins', sans-serif; 
@@ -17,6 +17,7 @@
       animation: gradientShift 12s ease infinite; 
     }
 
+    /* Navbar */
     .navbar { 
       display: flex; justify-content: space-between; align-items: center; 
       padding: 20px; position: fixed; width: 100%; top: 0; z-index: 1000;
@@ -26,6 +27,7 @@
     .nav-links a { text-decoration: none; color: #fff; transition: 0.3s; }
     .nav-links a:hover { color: #00f7ff; }
 
+    /* Hero */
     .hero { display: flex; align-items: center; justify-content: center; height: 100vh; padding-top: 60px; }
     .hero-text { flex: 1; animation: fadeInLeft 1.5s ease; text-align: center; }
     .hero-text h2 { font-size: 2.5rem; }
@@ -36,6 +38,7 @@
       animation: bounce 3s infinite, glow 2s ease-in-out infinite alternate;
     }
 
+    /* Sections */
     section { padding: 80px 10%; text-align: center; }
     .section-title { font-size: 2rem; margin-bottom: 30px; animation: fadeIn 2s ease; }
 
@@ -45,6 +48,7 @@
       backdrop-filter: blur(8px);
     }
 
+    /* Skills */
     .skill-bars { max-width: 600px; margin: auto; }
     .bar { margin: 15px 0; text-align: left; }
     .progress { background: rgba(255,255,255,0.15); border-radius: 20px; overflow: hidden; height: 20px; }
@@ -54,6 +58,7 @@
     .js span { background: #f7df1ecc; width: 75%; color: #000; }
     .py span { background: #3776abcc; width: 80%; }
 
+    /* Projects */
     .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
     .card { 
       padding: 40px; border-radius: 15px; 
@@ -62,28 +67,67 @@
     }
     .card:hover { transform: translateY(-10px) scale(1.05); background: rgba(255,255,255,0.15); }
 
-    form { 
-      max-width: 500px; margin: auto; display: flex; flex-direction: column; gap: 15px;
-      background: rgba(255,255,255,0.08); border-radius: 20px; padding: 30px;
-      backdrop-filter: blur(10px);
-    }
-    input, textarea { 
-      padding: 12px; border: none; border-radius: 8px; outline: none;
-      background: rgba(255,255,255,0.1); color: #fff;
-    }
-    .btn { 
-      padding: 12px; background: #00f7ff; border: none; border-radius: 8px;
-      cursor: pointer; transition: 0.3s; color: #000; font-weight: bold;
-    }
-    .btn:hover { background: #00c1cc; }
-
+    /* Footer */
     footer { text-align: center; padding: 20px; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
 
-    /* Thank You Message */
+    /* Floating Contact Button */
+    #contact-toggle {
+      position: fixed;
+      bottom: 20px; right: 20px;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: #00f7ff;
+      color: #000; font-size: 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 2000;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+    }
+    #contact-toggle:hover { transform: scale(1.1); }
+
+    /* Floating Contact Widget */
+    #contact-widget {
+      position: fixed;
+      bottom: 90px; right: 20px;
+      width: 320px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 1999;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      animation: slideUp 0.4s ease forwards;
+    }
+    #contact-widget h3 { margin-bottom: 10px; text-align: center; }
+    #contact-widget input, 
+    #contact-widget textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+    #contact-widget .btn {
+      width: 100%;
+      background: #00f7ff; color: #000; font-weight: bold;
+      border: none; padding: 10px; border-radius: 8px;
+      cursor: pointer; transition: 0.3s;
+    }
+    #contact-widget .btn:hover { background: #00c1cc; }
+
+    /* Thank You message */
     #thank-you {
-      display: none; text-align: center; padding: 20px; 
-      background: rgba(0,255,255,0.1); border-radius: 15px; margin-top: 20px;
-      font-weight: 600;
+      display: none;
+      text-align: center;
+      padding: 10px;
+      background: rgba(0,255,255,0.1);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      margin-top: 10px;
     }
 
     /* Animations */
@@ -101,6 +145,10 @@
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
 
     @media (max-width: 768px) {
       .hero { flex-direction: column; text-align: center; }
@@ -117,7 +165,6 @@
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
@@ -159,28 +206,39 @@
     </div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact">
-    <h2 class="section-title">Contact Me</h2>
-    <form id="contact-form" action="https://formsubmit.co/deejay.cristobal@protonmail.com" method="POST">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="">
-
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="Your Message" required></textarea>
-      <button type="submit" class="btn">Send Message</button>
-    </form>
-    <div id="thank-you">✅ Thank you for your message! I’ll reply as soon as I can.</div>
-  </section>
-
   <!-- Footer -->
   <footer>
     <p>© 2025 Dee Jay | All Rights Reserved</p>
   </footer>
 
-  <!-- JS for Thank You -->
+  <!-- Floating Contact Button -->
+  <div id="contact-toggle">✉️</div>
+
+  <!-- Floating Contact Form -->
+  <div id="contact-widget">
+    <form id="contact-form" action="https://formsubmit.co/deejay.cristobal@protonmail.com" method="POST">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="">
+
+      <h3>Contact Me</h3>
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit" class="btn">Send</button>
+    </form>
+    <div id="thank-you">✅ Thank you for your message! I’ll reply as soon as I can.</div>
+  </div>
+
+  <!-- JS -->
   <script>
+    // Toggle Contact Widget
+    const toggle = document.getElementById("contact-toggle");
+    const widget = document.getElementById("contact-widget");
+    toggle.addEventListener("click", () => {
+      widget.style.display = (widget.style.display === "flex") ? "none" : "flex";
+    });
+
+    // Handle Form Submission
     document.getElementById("contact-form").addEventListener("submit", function(e) {
       e.preventDefault();
       const form = e.target;
